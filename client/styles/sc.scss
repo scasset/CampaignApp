@@ -1,0 +1,96 @@
+
+.item {padding: 2px}
+.input-label {
+    font-size: 14px;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, i, u, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, fieldset, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video 
+{
+  font-size: 14px;
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+  
+  font-size: 14px;
+  line-height: 14px;
+      border-style: solid;
+ padding-left:2px;
+ height: 26px; 
+    border-width: 1px;
+    border-color: #eeeeee;
+   }
+  
+  
+  @media (max-width: 567px) {
+   
+    .responsive-sm .col, .responsive-sm .col-10, .responsive-sm .col-20, .responsive-sm .col-25, .responsive-sm .col-33, .responsive-sm .col-34, .responsive-sm .col-50, .responsive-sm .col-66, .responsive-sm .col-67, .responsive-sm .col-75, .responsive-sm .col-80, .responsive-sm .col-90 {
+      
+      margin-bottom: 5px; } }
+     .SCNumber10{
+       
+       width:70px;text-align:right
+     }
+     
+     .card, .list-inset {
+    
+    margin: 10px 10px; 
+}
+.col{
+  padding: 2px;
+  
+}
+.item p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+.item-complex .item-content,
+.item-radio .item-content {
+  
+  padding: 8px 24px 8px 8px;
+  }
+   a {
+    text-decoration: none;
+}
+.date_cell {
+  
+  cursor: pointer;
+}
+.scdate {
+  background-color:unset; 
+  cursor: pointer;
+}
+
+input[disabled], select[disabled], textarea[disabled], input[readonly]:not(.cloned-text-input), textarea[readonly]:not(.cloned-text-input), select[readonly] {
+     background-color:unset; 
+      cursor: pointer;
+}
+.input
+{
+  
+ font-size: 14px;
+    line-height: 12px;
+    border-style: solid;
+    padding-left: 2px;
+    height: 26px;
+    border-width: 1px;
+    border-color: #eeeeee; 
+    width: 100%;
+    display: block;
+ 
+    box-sizing: border-box;
+    padding-top: 6px;
+}

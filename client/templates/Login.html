@@ -1,0 +1,22 @@
+<ion-view title="Please Login">
+  <ion-content class="login">
+    
+    <div class="list">
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Email</span>
+    <input type="text" placeholder="Email" ng-model="email">
+  </label>
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Password</span>
+    <input type="password" placeholder="Password"  ng-model="password">
+  </label>
+ 
+</div>
+
+   
+    <div class="list center" > 
+      <button ng-click="login()" ng-disabled="!email || email.length === 0" class="button   button-positive">Login</button>
+  
+    </div>
+  </ion-content>
+</ion-view>

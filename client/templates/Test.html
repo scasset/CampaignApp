@@ -1,0 +1,45 @@
+<ion-view view-title="Home">
+  <!--<ion-nav-buttons side="right">
+    <button ng-click="campaigns.NewCampaign()" class="button button-clear button-positive button-icon ion-ios-compose-outline">เพิ่ม</button>
+  </ion-nav-buttons>-->
+
+  <ion-content> 
+    {{Campaigns.length}}
+     <div collection-repeat=" campaign in  Campaigns  "    item-width="500px"
+    item-height="200px">
+      
+        
+    <!--<div class="card" style="padding:10px" ng-repeat="campaign in  Campaigns | orderBy:'-lastMessage.timestamp'">-->
+    <div class="card"    >  
+      <div class="item item-divider"  >
+       {{campaign.Content}} <div style="display:none"> {{sumValue=SumBudget(campaign)}}</div>
+       <a href="#/tab/home/{{campaign._id}}">  
+        {{ campaign.StartDate | date : 'dd/MM/yy'}} - {{ campaign.EndDate| date : 'dd/MM/yy' }}
+       
+      </a>
+      </div> 
+      <div class="item item-text-wrap" >
+        <div class="row"  >
+         
+          <div class="col">
+            <div ng-bind-html="campaign.Content"></div>
+       
+            
+          </div>
+           
+          
+        
+      
+         
+        
+      </div>
+      <!--<div class="item item-divider">
+    I'm a Footer in a Card!
+  </div>-->
+    </div>
+      </div>
+     </div>
+
+    
+  </ion-content>
+</ion-view>

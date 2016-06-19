@@ -1,0 +1,56 @@
+<ion-view view-title="Home">
+  <!--<ion-nav-buttons side="right">
+    <button ng-click="campaigns.NewCampaign()" class="button button-clear button-positive button-icon ion-ios-compose-outline">เพิ่ม</button>
+  </ion-nav-buttons>-->
+
+  <ion-content> 
+   
+     <div ng-repeat=" campaign1 in  Campaigns track by $index " class=" row responsive-sm" ng-if=" $index % 2 == 0">
+      <div class=" col-50" ng-repeat=" campaign in [Campaigns[$index], Campaigns[$index+1]]" ng-if=" campaign != null">
+        
+    <!--<div class="card" style="padding:10px" ng-repeat="campaign in  Campaigns | orderBy:'-lastMessage.timestamp'">-->
+    <div class="card"    >  
+      <div class="item item-divider"  >
+       {{campaign.CampaignName}} <div style="display:none"> {{sumValue=SumBudget(campaign)}}</div>
+       <a href="#/tab/home/{{campaign._id}}">  
+        {{ campaign.StartDate | date : 'dd/MM/yy'}} - {{ campaign.EndDate| date : 'dd/MM/yy' }}
+      </a>
+      </div> 
+      <div class="item item-text-wrap" >
+        <div class="row"  >
+         
+          <div class="col">
+            <div> Visit <font color=green> {{FormatNumber((sumValue.ActualVisit / sumValue.BudgetVisit)*100 ) | number:0}} %</font></div> 
+            <div>{{sumValue.BudgetVisit | number:0}} / {{sumValue.ActualVisit | number:0}}</div>
+       
+            
+          </div>
+           <div class="col" > 
+            <div style="height:50px;width:100px" ><canvas   class="chart chart-doughnut" 
+            chart-data="[FormatNumber((sumValue.ActualVisit / sumValue.BudgetVisit)*100) ,100-FormatNumber(((sumValue.ActualVisit / sumValue.BudgetVisit)*100))]" chart-labels="['Actual','Budget']" chart-legend="false"></canvas> </div>
+            
+          </div>
+           <div class="col">
+            <div> Goal <font color=green> {{FormatNumber((sumValue.ActualGoal / sumValue.BudgetGoal)*100 ) | number:0}} %</font></div> 
+            <div>   {{sumValue.BudgetGoal | number:0}} / {{sumValue.ActualGoal | number:0}}</div>
+   
+          </div>
+           <div class="col"  >
+            
+             <div style="height:50px;width:100px" ><canvas   class="chart chart-pie" 
+             chart-data="[FormatNumber((sumValue.ActualGoal / sumValue.BudgetGoal)*100) ,100-FormatNumber(((sumValue.ActualGoal / sumValue.BudgetGoal)*100))]" chart-labels="['Actual','']" chart-legend="false"></canvas> </div>
+          </div>
+        </div>
+         
+        
+      </div>
+      <!--<div class="item item-divider">
+    I'm a Footer in a Card!
+  </div>-->
+    </div>
+      </div>
+     </div>
+
+    
+  </ion-content>
+</ion-view>

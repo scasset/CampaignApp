@@ -1,0 +1,85 @@
+<ion-view title="{{ campaign.CampaignName }}">
+  <ion-nav-buttons side="left">
+    
+
+  </ion-nav-buttons>
+ <!--<ion-nav-buttons side="left">
+    <a href="#/tab/campaigns" class="button button-clear button-positive button-icon ion-ios-arrow-back">รายการแคมเปญ</a> 
+      </ion-nav-buttons>-->
+ 
+  <ion-content delegate-handle="chatScroll"  >
+
+    <div class="list" style="margin-bottom: 0px">
+      <div class="row responsive-sm">
+        <div class="col">
+
+          <label class=" item-input  item-stacked-label">
+    <span class="input-label">ชื่อแคมเปญ</span>
+    <input type="text" placeholder="ชื่อแคมเปญ" ng-model="campaignReportCtrl.Campaign.CampaignName"  >
+  </label>
+
+        </div>
+        <div class="col">
+
+          <label class=" item-input item-stacked-label">
+    <span class="input-label">วันที่</span>
+     <input type="text"  value="
+      {{ campaignReportCtrl.Campaign.StartDate | date : 'dd/MM/yy'}} - {{ campaignReportCtrl.Campaign.EndDate| date : 'dd/MM/yy' }}" readonly>
+  </label>
+
+        </div>
+      </div>
+     
+   
+    </div>
+
+
+    <div ng-repeat=" card in  campaignReportCtrl.Campaign.Medias track by $index " class=" row responsive-sm" ng-if=" $index % 2 == 0">
+      <div class=" col-50" ng-repeat=" card in [campaignReportCtrl.Campaign.Medias[$index], campaignReportCtrl.Campaign.Medias[$index+1]]"  ng-if=" card != null">
+
+
+        <div class="card" >
+          <div class="item item-divider">
+ 
+            <div class="row  ">
+              <div class="col">
+                {{card.MediaCode?card.MediaCode:"ระบุช่องทาง"}} Expense : {{card.BudgetExpense|number :0}}
+                {{SumBudget(card)}}
+              </div>
+              
+            </div>
+          </div>
+          <div class="item item-text-wrap">
+           
+           
+            <div class="row  ">
+               
+              <div class="col">
+
+                <canvas id="line" class="chart chart-line" chart-data="dataVisit" chart-labels="labels"  chart-legend="true"
+                 chart-series = "series"   
+            
+            ></canvas>
+
+              </div> 
+               
+
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+
+      </div>
+    </div>
+
+
+
+
+
+
+  </ion-content>
+</ion-view>

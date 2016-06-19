@@ -1,0 +1,45 @@
+<ion-view title="แคมเปญ ">
+  <ion-side-menus  enable-menu-with-back-views="true">
+    <ion-side-menu-content>
+      <ion-nav-bar class="bar-positive">
+
+        <ion-nav-buttons side="left">
+          <button menu-toggle="left" class="button button-icon  ion-navicon"></button>
+        </ion-nav-buttons>
+      
+      </ion-nav-bar>
+      
+      <ion-nav-view name="tab-campaign2">
+         <ion-content padding="false" class="side-menu-left has-header">
+โปรดเลือกรายการ
+         </ion-content>
+      </ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu side="left" expose-aside-when="large">
+      <ion-header-bar class="bar-positive">
+        <div class="title"><i class="icon ion-android-apps"></i> รายการแคมเปญ  
+        
+    <button style="float:right;margin-top:5px" ng-click="NewCampaign()" class="button  button-positive button-icon ion-ios-compose-outline">เพิ่ม</button>
+        </div>
+      </ion-header-bar>
+   
+      <ion-content padding="false" class="side-menu-left has-header">
+        <ion-list>
+             <!--xxx:{{data.Campaigns.length}}-->
+          <ion-item ng-repeat="campaign in  data.Campaigns | orderBy:'-lastMessage.timestamp'" class="   item-icon-right"
+            type="item-text-wrap" href="#/tab/campaigns/m/{{campaign._id}}"  style="padding:0px">
+            <h3>{{campaign.CampaignName}} </h3>
+            <p>{{ campaign.StartDate | date : 'dd/MM/yy'}} - {{ campaign.EndDate| date : 'dd/MM/yy' }}</p>
+            <i class="icon ion-chevron-right icon-accessory"></i>
+
+            <ion-option-button class="button-assertive" ng-click="RemoveCampaign(campaign)">
+              ลบ
+            </ion-option-button>
+          </ion-item>
+
+
+        </ion-list>
+      </ion-content>
+    </ion-side-menu>
+  </ion-side-menus>
+</ion-view>
