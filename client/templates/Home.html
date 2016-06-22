@@ -1,9 +1,6 @@
-<ion-view view-title="Home">
-  <!--<ion-nav-buttons side="right">
-    <button ng-click="campaigns.NewCampaign()" class="button button-clear button-positive button-icon ion-ios-compose-outline">เพิ่ม</button>
-  </ion-nav-buttons>-->
+<ion-view  title="Home" has-header="false" hide-nav-bar="true">
 
-  <ion-content> 
+  <ion-content padding="true" has-header="false"> 
    
      <div ng-repeat=" campaign1 in  Campaigns track by $index " class=" row responsive-sm" ng-if=" $index % 2 == 0">
       <div class=" col-50" ng-repeat=" campaign in [Campaigns[$index], Campaigns[$index+1]]" ng-if=" campaign != null">

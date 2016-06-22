@@ -1,0 +1,5 @@
+node_modules/
+build/
+set.txt
+docker-compose.yml
+san

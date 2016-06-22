@@ -209,6 +209,43 @@ Meteor.methods({
     return id;
    // return Meteor.users.update(this.userId, { $set: { 'profile.picture': data } });
   }
+    ,
+  SaveMedia(data) {
+    // if (!this.userId) {
+    //   throw new Meteor.Error('not-logged-in',
+    //     'Must be logged in to update his picture.');
+    // }
+
+    //check(data, String);
+    console.dir(data);
+    this.unblock();
+    //debugger;
+      // check(taskId, String);
+   // check(setChecked, Boolean);
+   var id = data._id;
+   //Medias.update(id,data); //ok
+   //delete data.$$dependencies;
+   delete data._id;
+   if(id && id != "") {
+    
+   console.log("update Media _id=" + id);
+
+    //   delete data.$$dependencies;
+   Medias.update(id,{$set:data}); 
+   }else {
+      console.log("add  Media"  );
+      Medias.Status="A";
+     id = Medias.insert(data);
+   }
+   //ok
+ //  console.log(data);
+    console.log("_id=" + id);
+    //Tasks.update(taskId, { $set: { checked: setChecked } });
+   //  throw new Meteor.Error(404, "Please enter your name");
+     //  debugger;
+    return id;
+   // return Meteor.users.update(this.userId, { $set: { 'profile.picture': data } });
+  }
    ,
   RemoveCampaign(data) {
     // if (!this.userId) {

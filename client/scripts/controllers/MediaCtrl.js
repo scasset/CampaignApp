@@ -3,7 +3,7 @@ angular
   .module('CapmaignApp')
   .controller('MediaCtrl', MediaCtrl);
 
-function MediaCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionSheet, $state, $timeout, $ionicScrollDelegate, $ionicPopup, $ionicHistory, ionicDatePicker) {
+function MediaCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionSheet, $state, $timeout, $ionicScrollDelegate, $ionicPopup, $ionicHistory, ionicDatePicker,$ionicSideMenuDelegate) {
   // $ionicHistory.nextViewOptions({
   //   disableAnimate: true,
   //   disableBack: true
@@ -15,19 +15,19 @@ function MediaCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionSheet, 
   //  alert($scope.currentUser.username);
   console.dir($stateParams);
   //$reactive($scope).attach($scope);
-  $scope.CampaignID = $stateParams.CampaignID;
-  //  alert($scope.CampaignID);
-   $scope.subscribe('Campaigns');
-  $scope.SaveCampaign2 = function (objCam) {
-    var CampaignID = '55mNtrpAYtcJ4GJQu';
-    // alert(CampaignID);
-    //    alert(CampaignID);
-    $state.go('tab.campaign', { CampaignID });
+  $scope.MediaID = $stateParams.MediaID;
+  //  alert($scope.MediaID);
+ 
+  $scope.SaveMedia2 = function (objCam) {
+    var MediaID = '55mNtrpAYtcJ4GJQu';
+    // alert(MediaID);
+    //    alert(MediaID);
+    $state.go('tab.media', { MediaID });
   }
   $scope.TestReport = function () {
     // alert("Save1");
     // var tmpCam;
-    // tmpCam =angular.copy(campaign );
+    // tmpCam =angular.copy(media );
     //  debugger;
     $scope.testResult = {};
     $scope.callMethod('SaleGroup', 99, function (error, result) {
@@ -42,7 +42,7 @@ function MediaCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionSheet, 
     });
 
   }
-  $scope.SaveCampaignFile = function (objCam) {
+  $scope.SaveMediaFile = function (objCam) {
 
     Meteor.call('retrieveMedia', function (err, res) {
       // debugger;
@@ -51,136 +51,109 @@ function MediaCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionSheet, 
 
   }
 
-    this.SaveCampaign = function (objCam) {
+    this.SaveMedia = function (objCam) {
      // alert("Save1");
       // var tmpCam;
-      // tmpCam =angular.copy(campaign );
+      // tmpCam =angular.copy(media );
       //  debugger;
-      this.callMethod('SaveCampaign', angular.copy(objCam), function (error, result) {
+      this.callMethod('SaveMedia', angular.copy(objCam), function (error, result) {
         
         if (error) {
           alert('error:' + error.reason);
 
         } else {
-          this.CampaignID = result;
-          var CampaignID = this.CampaignID;
+          this.MediaID = result;
+          var MediaID = this.MediaID;
           
-        // var  CampaignID = '55mNtrpAYtcJ4GJQu';
-         // alert(CampaignID);
-          //this.$state.go('tab.campaign',{CampaignID}); // ok
-       //   $state.go('tab.campaigns.m',{CampaignID});
+        // var  MediaID = '55mNtrpAYtcJ4GJQu';
+         // alert(MediaID);
+          //this.$state.go('tab.media',{MediaID}); // ok
+       //   $state.go('tab.medias.m',{MediaID});
         }
       });
 
     }
     
-  $scope.SaveCampaignScope = function (objCam) {
-    //$scope.SaveCampaign = function (objCam) {
+  $scope.SaveMediaScope = function (objCam) {
+    //$scope.SaveMedia = function (objCam) {
     //alert("Save1");
     // var tmpCam;
-    //tmpCam =angular.copy($scope.Campaign );
+    //tmpCam =angular.copy($scope.Media );
     //debugger;
     // $meteor.call('checkTwitter', {}, function (error, result) {
 
-    Meteor.call('SaveCampaign', angular.copy(objCam), function (error, result) {
+    Meteor.call('SaveMedia', angular.copy(objCam), function (error, result) {
       // alert(result);
       if (error) {
         console.log('failed', err);
       } else {
-        $scope.CampaignID = result;
-        var CampaignID = $scope.CampaignID;
+        $scope.MediaID = result;
+        var MediaID = $scope.MediaID;
 
-        // var  CampaignID = '55mNtrpAYtcJ4GJQu';
-        // alert(CampaignID);
-        //$scope.$state.go('tab.campaign',{CampaignID}); // ok
-        //  $scope.Campaign = { Status: 'A', Medias: [{}] };
+        // var  MediaID = '55mNtrpAYtcJ4GJQu';
+        // alert(MediaID);
+        //$scope.$state.go('tab.media',{MediaID}); // ok
+        //  $scope.Media = { Status: 'A', Medias: [{}] };
         //  debugger;
-        if ($stateParams.CampaignID == "NEW") {
-          $scope.Campaign = { Status: 'A', Medias: [{}] };
+        if ($stateParams.MediaID == "NEW") {
+          $scope.Media = { Status: 'A', Medias: [{}] };
 
         }
-//        $state.go('tab.campaigns.m', { CampaignID });
+//        $state.go('tab.medias.m', { MediaID });
 
       }
     });
 
 
   }
-  $scope.RemoveCampaign = function (objCam) {
+  $scope.RemoveMedia = function (objCam) {
     // alert("Save1");
     // var tmpCam;
-    // tmpCam =angular.copy(campaign );
+    // tmpCam =angular.copy(media );
     //  debugger;
-    $scope.callMethod('RemoveCampaign', objCam, function (error, result) {
+    $scope.callMethod('RemoveMedia', objCam, function (error, result) {
       // debugger;
       if (error) {
         alert('error:' + error.reason);
 
       } else {
-        var Campaign = Campaigns.findOne();
-        if (Campaign) {
-          var CampaignID = Campaigns.findOne()._id;
-          $state.go('tab.campaigns.m', { CampaignID });
+        var Media = Medias.findOne();
+        if (Media) {
+          var MediaID = Medias.findOne()._id;
+          $state.go('tab.medias.m', { MediaID });
 
 
 
         } else {
-          $scope.Campaign = {};
+          $scope.Media = {};
         }
-        //$state.go('tab.campaigns');
+        //$state.go('tab.medias');
         // alert(result);
       }
     });
 
   }
 
-  $scope.ShowURL = function (campaign, media) {
-    //debugger;
-    var myPopup = $scope.$ionicPopup.show({
-      template: '<textarea style="height:50px" onclick="this.select()" >'
-      + campaign.URL
-      + '?utm_medium=banner'
-      + '&utm_campaign=' + campaign.CampaignCode
-      + '&utm_source=' + media.MediaCode + "</textarea>",
-      title: 'URL Add Google Analytic',
-      subTitle: 'Please select all and copy.',
-      // scope: $scope,
-      buttons: [
-        { text: 'Cancel' }
-      ]
-    });
 
-  }
-  $scope.RemoveMedia = function (campaign, index) {
+  $scope.RemoveMedia = function (media, index) {
 
-    campaign.Medias.splice(index, 1);
+    media.Medias.splice(index, 1);
 
 
   }
-  $scope.NewMedia = function (campaign) {
+  $scope.NewMedia = function (media) {
     var newMedia = {};
-    campaign.Medias.splice(campaign.Medias.length, 0, newMedia);
+    media.Medias.splice(media.Medias.length, 0, newMedia);
     $timeout(() => {
       $scope.$ionicScrollDelegate.$getByHandle('chatScroll').scrollBottom(true);
     }, 300);
-    //   delete campaign.Medias[index];
+    //   delete media.Medias[index];
     //  alert(index);
 
   }
 
 
 
-  $scope.currentDate = new Date();
-  $scope.minDate = new Date(2105, 6, 1);
-  $scope.maxDate = new Date(2015, 6, 31);
-
-  $scope.datePickerCallback = function (val) {
-    if (!val) {
-      console.log('Date not selected');
-    } else {
-      console.log('Selected date is : ', val);
-    }
-  };
 
   //  var myPopup = $scope.$ionicPopup.show({
   //     template: '<textarea  rows="2" cols="80" style="height:50px" onclick="$scope.select()">xxxx'   + "</textarea>",
@@ -192,153 +165,57 @@ function MediaCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionSheet, 
   //     ]
   //   });
   // $scope.currMedia= {};
-  $scope.SelectMedia = function (thisCtrl, campaign, curObj, curIndex) {
-    //  $scope.currMedia  = curObj;
-    // Show the action sheet
-    var MediaCodes = ["facebook", "twitter", "think"];
-    var hideSheet = $ionicActionSheet.show({
-      buttons: [
-        { text: 'Show URL' },
-        { text: 'FaceBook' },
-        { text: 'Twitter' }
-        ,
-        { text: 'Think' }
-      ],
-      destructiveText: 'Delete',
-      titleText: 'Select Media',
-      cancelText: 'Cancel',
-      destructiveButtonClicked: function () {
-        // debugger;
-        // this.$scope.RemoveMedia(curObj, curIndex);
-        campaign.Medias.splice(curIndex, 1);
-        return true;
-        // alert(curObj.MediaCode);
-      },
-      cancel: function () {
-        // add cancel code..
-      },
-      buttonClicked: function (index) {
-        if (index == 0) {
-          thisCtrl.ShowURL(campaign, curObj);
-        } else {
-          curObj.MediaCode = MediaCodes[index - 1];
-        }
-        return true;
-      }
-    });
-  }
-  // this.data = Campaigns.findOne($scope.campaignId);
-  console.log("id:" + $scope.CampaignID);
 
-  if ($scope.CampaignID == "NEW") {
+  // this.data = Medias.findOne($scope.mediaId);
+  console.log("id:" + $scope.MediaID);
 
-    this.Campaign = { Status: 'A', Medias: [{}] };
+  if ($scope.MediaID == "NEW") {
+
+    this.Media = { Status: 'A', Medias: [{}] };
     // $scope.data = $scope.$meteorCollection(Chats, false);
   } else {
     //  debugger;
-    TempCampaign = Campaigns.findOne($scope.CampaignID);
-    if (!TempCampaign) {
+    TempMedia = Medias.findOne($scope.MediaID);
+    if (!TempMedia) {
 
-     this.Campaign = {};
-       // alert("Clear")
+     this.Media = {};
+       //  alert("Clear")
       //        debugger;
 
 
 
 
-      //      $scope.Campaign = {};
+      //      $scope.Media = {};
     } else {
-    console.log("Find:" +  $scope.CampaignID);
-    this.CampaignID = $scope.CampaignID;
-   // $scope.Campaign=Campaigns.findOne($scope.CampaignID);
-      //  $scope.Campaign=    $scope.$meteorCollection(function () {
+    console.log("Find:" +  $scope.MediaID);
+    this.MediaID = $scope.MediaID;
+   // $scope.Media=Medias.findOne($scope.MediaID);
+      //  $scope.Media=    $scope.$meteorCollection(function () {
                   
-      //                return Campaigns.find($scope.CampaignID);
+      //                return Medias.find($scope.MediaID);
       //              }, false);
       
           this.helpers({
 
-      Campaign() {
-        return Campaigns.findOne(this.CampaignID);
+      Media() {
+        return Medias.findOne(this.MediaID);
       }
     });
     }
     // debugger;
-    //$scope.campaign= $scope.$meteorObject(Campaigns, $scope.CampaignID , false)
-    /*           $scope.Campaign =    $meteorCollection(function () {
-                     return Campaigns.findOne(  $scope.CampaignID );
+    //$scope.media= $scope.$meteorObject(Medias, $scope.MediaID , false)
+    /*           $scope.Media =    $meteorCollection(function () {
+                     return Medias.findOne(  $scope.MediaID );
                    }, false);
                    */
 
   }
   
- 
-  var StartDateObj = {
-    callback: function (val) {  //Mandatory
-      this.Campaign.StartDate = new Date(val);
-      //debugger;
-      console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-      StartDateObj.inputDate = new Date(val);
-    },
-    inputDate:  this.Campaign && this.Campaign.StartDate ? this.Campaign.StartDate : new Date(),      //Optional
-  };
-  var ipObj1 = {
-    callback: function (val) {  //Mandatory
-        setvalue(val);
-      //this.Campaign.StartDate = new Date(val);
-      //debugger;
-      console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-      ipObj1.inputDate = new Date(val);
-    },
-    inputDate: this.Campaign && this.Campaign.StartDate ? this.Campaign.StartDate : new Date(),      //Optional
-  };
-//debugger;
-//thisCtrl
-  this.OpenStartDatePicker = function () {
-    // debugger;
-    //tt.Campaign.StartDate = new Date();
-    ionicDatePicker.openDatePicker({
-      callback: function (val) {  //Mandatory
-        //debugger;
-        thisCtrl.Campaign.StartDate = new Date(val);
-             // setvalue(val);
-      //  this.x.xx= "dddd";
-        //this.x.Campaign.StartDate = new Date();
-        //debugger;
-        console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-        this.inputDate = new Date(val);
-      },
-      inputDate:thisCtrl.Campaign && thisCtrl.Campaign.StartDate ? thisCtrl.Campaign.StartDate : new Date(),      //Optional
-     // x:$scope 
-    });
 
 
-  };
   var thisCtrl=this;
-  function setvalue(val) {
-    
-     tmp.Campaign.EndDate = new Date(val)
-  }
-  $scope.OpenEndDatePicker = function () {
-    // debugger;
-    ionicDatePicker.openDatePicker({
-      callback: function (val) {  //Mandatory
-        thisCtrl.Campaign.EndDate = new Date(val);
-       // setvalue(val);
-        //this.Campaign.EndDate = new Date(val);
-        //debugger;
-        console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-        this.inputDate = new Date(val);
-      },
-      inputDate: thisCtrl.Campaign && thisCtrl.Campaign.EndDate ? thisCtrl.Campaign.EndDate : new Date(),      //Optional
-    });
+ 
 
-
-  };
-
-  $scope.openDatePicker = function () {
-    ionicDatePicker.openDatePicker(ipObj1);
-  };
  
 }
 

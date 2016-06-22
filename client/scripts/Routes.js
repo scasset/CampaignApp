@@ -22,7 +22,7 @@ angular
   });
 function config ($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
 $ionicConfigProvider.views.transition('none');
-    $ionicConfigProvider.tabs.position('bottom'); 
+   $ionicConfigProvider.tabs.position('bottom'); 
  
     $stateProvider
       .state('tab', {
@@ -153,13 +153,13 @@ $ionicConfigProvider.views.transition('none');
           }
         }
       })
-       .state('tab.settings.medias', {
+       .state('tab.medias', {
       url: '/medias',
          cache: false,
       views: {
-        'tab-settings': {
+        'tab-medias': {
           templateUrl: 'client/templates/Medias.html',
-          controller: 'MediasCtrl as mediaCtrl',
+          controller: 'MediasCtrl as mediasCtrl',
            resolve: {
         user: ['$meteor', function ($meteor) {
           return $meteor.requireUser();
@@ -169,7 +169,7 @@ $ionicConfigProvider.views.transition('none');
         }
       }
     })
-     .state('tab.settings.medias.detail', {
+     .state('tab.medias.detail', {
          cache: false,
          url: '/detail/:MediaID',
         views: {

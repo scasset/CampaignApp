@@ -42,14 +42,7 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
     });
 
   }
-  $scope.SaveCampaignFile = function (objCam) {
-
-    Meteor.call('retrieveMedia', function (err, res) {
-      // debugger;
-      window.open("data:application/pdf;base64, " + res);
-    });
-
-  }
+   
 
     this.SaveCampaign = function (objCam) {
      // alert("Save1");
@@ -157,11 +150,12 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
 
 
   }
-  $scope.NewMedia = function (campaign) {
+  var thisCtrl = this;
+  this.NewMedia = function (campaign) {
     var newMedia = {};
     campaign.Medias.splice(campaign.Medias.length, 0, newMedia);
-    $timeout(() => {
-      $scope.$ionicScrollDelegate.$getByHandle('chatScroll').scrollBottom(true);
+         $timeout(() => {
+      $ionicScrollDelegate.$getByHandle('chatScroll').scrollBottom(true);
     }, 300);
     //   delete campaign.Medias[index];
     //  alert(index);
@@ -182,33 +176,33 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
     }
   };
 
-  //  var myPopup = $scope.$ionicPopup.show({
-  //     template: '<textarea  rows="2" cols="80" style="height:50px" onclick="$scope.select()">xxxx'   + "</textarea>",
-  //     title: 'URL Add Google Analytic',
-  //     subTitle: 'Please select all and copy.',
-  //     //scope: $scope,
-  //     buttons: [
-  //       { text: 'Cancel' } 
-  //     ]
-  //   });
-  // $scope.currMedia= {};
+  
   $scope.SelectMedia = function (thisCtrl, campaign, curObj, curIndex) {
     //  $scope.currMedia  = curObj;
     // Show the action sheet
+  //  debugger;
+  //  alert(campaign.Medias.length);
+  var DeleteText = null;
+   if(campaign.Medias.length>1) {
+        DeleteText = "ลบช่องทาง";
+   } 
+   var buttonArr = [ { text: 'Show URL' }];
+  data = Medias.find({}, { sort: { MediaName: 1 }}).fetch();
+    data.forEach(function(row) {
+        console.log(row.name)
+
+        buttonArr.push({text:row.MediaName});
+    });
+
+       
     var MediaCodes = ["facebook", "twitter", "think"];
     var hideSheet = $ionicActionSheet.show({
-      buttons: [
-        { text: 'Show URL' },
-        { text: 'FaceBook' },
-        { text: 'Twitter' }
-        ,
-        { text: 'Think' }
-      ],
-      destructiveText: 'Delete',
-      titleText: 'Select Media',
+      buttons: buttonArr,
+      destructiveText: DeleteText,
+      titleText: 'เลือกช่องทาง',
       cancelText: 'Cancel',
       destructiveButtonClicked: function () {
-        // debugger;
+      //    debugger;
         // this.$scope.RemoveMedia(curObj, curIndex);
         campaign.Medias.splice(curIndex, 1);
         return true;
@@ -221,7 +215,11 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
         if (index == 0) {
           thisCtrl.ShowURL(campaign, curObj);
         } else {
-          curObj.MediaCode = MediaCodes[index - 1];
+           //media = Medias.findOne({MediaName});
+           //debugger;
+          curObj.MediaCode = data[index - 1].MediaCode;
+          curObj.MediaName = data[index - 1].MediaName;
+          curObj.MediaID = data[index - 1]._id;
         }
         return true;
       }
@@ -282,16 +280,7 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
     },
     inputDate:  this.Campaign && this.Campaign.StartDate ? this.Campaign.StartDate : new Date(),      //Optional
   };
-  var ipObj1 = {
-    callback: function (val) {  //Mandatory
-        setvalue(val);
-      //this.Campaign.StartDate = new Date(val);
-      //debugger;
-      console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-      ipObj1.inputDate = new Date(val);
-    },
-    inputDate: this.Campaign && this.Campaign.StartDate ? this.Campaign.StartDate : new Date(),      //Optional
-  };
+   
 //debugger;
 //thisCtrl
   this.OpenStartDatePicker = function () {
@@ -336,9 +325,7 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
 
   };
 
-  $scope.openDatePicker = function () {
-    ionicDatePicker.openDatePicker(ipObj1);
-  };
+ 
  
 }
 
