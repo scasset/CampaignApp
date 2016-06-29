@@ -9,7 +9,7 @@
       
       </ion-nav-bar>
       
-      <ion-nav-view name="tab-campaign2">
+      <ion-nav-view name="tab-campaigns-detail">
          <ion-content padding="false" class="side-menu-left has-header">
 โปรดเลือกรายการ
          </ion-content>
@@ -25,14 +25,14 @@
    
       <ion-content padding="false" class="side-menu-left has-header">
         <ion-list>
-             <!--xxx:{{data.Campaigns.length}}-->
-          <ion-item ng-repeat="campaign in  data.Campaigns | orderBy:'-lastMessage.timestamp'" class="   item-icon-right"
-            type="item-text-wrap" href="#/tab/campaigns/m/{{campaign._id}}"  style="padding:0px">
+             <!--xxx:{{campaignsCtrl.Campaigns.length}}-->
+          <ion-item ng-repeat="campaign in  campaignsCtrl.Campaigns | orderBy:'-lastMessage.timestamp'" class="   item-icon-right"
+            type="item-text-wrap" href="#/tab/campaigns/detail/{{campaign._id}}"  style="padding:0px">
             <h3>{{campaign.CampaignName}} </h3>
             <p>{{ campaign.StartDate | date : 'dd/MM/yy'}} - {{ campaign.EndDate| date : 'dd/MM/yy' }}</p>
             <i class="icon ion-chevron-right icon-accessory"></i>
 
-            <ion-option-button class="button-assertive" ng-click="RemoveCampaign(campaign)">
+            <ion-option-button class="button-assertive" ng-click="campaignsCtrl.RemoveCampaign(campaign)">
               ลบ
             </ion-option-button>
           </ion-item>

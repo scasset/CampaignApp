@@ -46,22 +46,33 @@ cc++;
 
 
   $scope.$on( "$ionicView.enter", function( scopes, states ) {
-
-   //debugger;
+ 
         if( states.stateName == "tab.medias.detail" ) {
-
-//        if( states.fromCache && states.stateName == "tab.medias.detail" ) {
+ 
                $ionicSideMenuDelegate.toggleLeft(true);
-              // debugger;
-            // do whatever
-        } else {
-            //   debugger;
+ 
         }
     });
   
  
-  $scope.remove = function (media) {
-    $scope.callMethod('removeMedia', chat._id);
+  $scope.RemoveMedia = function (objMedia) {
+    //alert("remove");
+    // var tmpCam;
+    // tmpCam =angular.copy(campaign );
+    //  debugger;
+    $scope.callMethod('RemoveMedia', objMedia, function (error, result) {
+      // debugger;
+      if (error) {
+        alert('error:' + error.reason);
+
+      } else {
+       
+          $scope.Media = {};
+       
+       
+      }
+    });
+
   }
 }
 

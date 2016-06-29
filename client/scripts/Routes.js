@@ -73,7 +73,7 @@ $ionicConfigProvider.views.transition('none');
       views: {
         'tab-campaigns': {
           templateUrl: 'client/templates/Campaigns.html',
-          controller: 'CampaignsCtrl as data',
+          controller: 'CampaignsCtrl as campaignsCtrl',
            resolve: {
         user: ['$meteor', function ($meteor) {
           return $meteor.requireUser();
@@ -83,11 +83,11 @@ $ionicConfigProvider.views.transition('none');
         }
       }
     })
-     .state('tab.campaigns.m', {
+     .state('tab.campaigns.detail', {
          cache: false,
-         url: '/m/:CampaignID',
+         url: '/detail/:CampaignID',
         views: {
-          'tab-campaign2': {
+          'tab-campaigns-detail': {
             templateUrl: 'client/templates/Campaign.html',
             controller: 'CampaignCtrl as campaignCtrl'
           }

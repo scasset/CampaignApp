@@ -73,7 +73,9 @@ input[type="color"] {
   background-color:unset; 
   cursor: pointer;
 }
-
+.scsmall {
+ font-size: 10px;
+}
 input[disabled], select[disabled], textarea[disabled], input[readonly]:not(.cloned-text-input), textarea[readonly]:not(.cloned-text-input), select[readonly] {
      background-color:unset; 
       cursor: pointer;

@@ -43,24 +43,34 @@
  
             <div class="row  ">
               <div class="col">
-                {{card.MediaCode?card.MediaCode:"ระบุช่องทาง"}} Expense : {{card.BudgetExpense|number :0}}
-                {{SumBudget(card)}}
+                {{card.MediaCode?card.MediaCode:"ระบุช่องทาง"}} Expense : {{card.BudgetExpense|number :0}} บาท 
+                Visit {{card.ActualVisit|number :0}} / {{card.BudgetVisit|number :0}}
+                 Goal {{card.ActualGoal|number :0}} / {{card.BudgetGoal|number :0}}
               </div>
               
             </div>
           </div>
           <div class="item item-text-wrap">
            
-           
+            
             <div class="row  ">
                
               <div class="col">
-
-                <canvas id="line" class="chart chart-line" chart-data="dataVisit" chart-labels="labels"  chart-legend="true"
-                 chart-series = "series"   
+<!--{{campaignReportCtrl.dataVisit}}-->
+                <canvas id="line" class="chart chart-line"  chart-data="card.datas"
+                 chart-labels="card.labels"  chart-legend="true"
+                 chart-series = "campaignReportCtrl.series"   
+            
+            ></canvas>
+<!--
+          <canvas id="line" class="chart chart-line" 
+                chart-data="campaignReportCtrl.GetData(card.Stats)"
+                 chart-labels="campaignReportCtrl.GetLabel(card.Stats)"   chart-legend="true"
+                 chart-series = "campaignReportCtrl.series"   
             
             ></canvas>
 
+-->
               </div> 
                
 

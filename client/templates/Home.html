@@ -3,13 +3,13 @@
   <ion-content padding="true" has-header="false"> 
    
      <div ng-repeat=" campaign1 in  Campaigns track by $index " class=" row responsive-sm" ng-if=" $index % 2 == 0">
-      <div class=" col-50" ng-repeat=" campaign in [Campaigns[$index], Campaigns[$index+1]]" ng-if=" campaign != null">
+      <div class=" col-50" ng-repeat=" campaign in [Campaigns[$index], Campaigns[$index+1]]" ng-if=" campaign != null" style="padding-left:10px">
         
     <!--<div class="card" style="padding:10px" ng-repeat="campaign in  Campaigns | orderBy:'-lastMessage.timestamp'">-->
     <div class="card"    >  
       <div class="item item-divider"  >
-       {{campaign.CampaignName}} <div style="display:none"> {{sumValue=SumBudget(campaign)}}</div>
-       <a href="#/tab/home/{{campaign._id}}">  
+        <a href="#/tab/home/{{campaign._id}}">  {{campaign.CampaignName}} <div style="display:none"> {{sumValue=SumBudget(campaign)}}</div>
+      
         {{ campaign.StartDate | date : 'dd/MM/yy'}} - {{ campaign.EndDate| date : 'dd/MM/yy' }}
       </a>
       </div> 
@@ -18,7 +18,8 @@
          
           <div class="col">
             <div> Visit <font color=green> {{FormatNumber((sumValue.ActualVisit / sumValue.BudgetVisit)*100 ) | number:0}} %</font></div> 
-            <div>{{sumValue.BudgetVisit | number:0}} / {{sumValue.ActualVisit | number:0}}</div>
+            <div  class="scsmall">Actual {{sumValue.ActualVisit | number:0}}</div>
+            <div class="scsmall">Budget {{sumValue.BudgetVisit | number:0}} </div>
        
             
           </div>
@@ -28,8 +29,9 @@
             
           </div>
            <div class="col">
-            <div> Goal <font color=green> {{FormatNumber((sumValue.ActualGoal / sumValue.BudgetGoal)*100 ) | number:0}} %</font></div> 
-            <div>   {{sumValue.BudgetGoal | number:0}} / {{sumValue.ActualGoal | number:0}}</div>
+            <div > Goal <font color=green> {{FormatNumber((sumValue.ActualGoal / sumValue.BudgetGoal)*100 ) | number:0}} %</font></div> 
+            <div class="scsmall">Actual   {{sumValue.ActualGoal | number:0}}</div>
+            <div class="scsmall">Budget   {{sumValue.BudgetGoal | number:0}}</div>
    
           </div>
            <div class="col"  >

@@ -225,6 +225,17 @@ Meteor.methods({
    var id = data._id;
    //Medias.update(id,data); //ok
    //delete data.$$dependencies;
+   var checkDup = Medias.findOne({"MediaName":data.MediaName,Status:"A",_id :{$ne : id}});
+   if (checkDup) {
+     console.log("Dup:" + checkDup._id);
+      throw new Meteor.Error(404, "ชื่อช่องทางซ้ำ:" + data.MediaName);
+   }
+    checkDup = Medias.findOne({"MediaCode":data.MediaCode,Status:"A",_id :{$ne : id}});
+   if (checkDup) {
+     console.log("Dup:" + checkDup._id);
+      throw new Meteor.Error(404, "รหัสช่องทางซ้ำ:" + data.MediaCode);
+   }
+
    delete data._id;
    if(id && id != "") {
     
@@ -266,4 +277,25 @@ Meteor.methods({
     return id;
    // return Meteor.users.update(this.userId, { $set: { 'profile.picture': data } });
   }
+   ,
+  RemoveMedia(data) {
+    // if (!this.userId) {
+    //   throw new Meteor.Error('not-logged-in',
+    //     'Must be logged in to update his picture.');
+    // }
+
+    //check(data, String);
+    console.dir(data);
+      // check(taskId, String);
+   // check(setChecked, Boolean);
+   var id = data._id;
+   //Medias.update(id,data); //ok
+   Medias.update(id,{$set:{'Status':'D'}}); //ok
+    console.log("_id=" + id);
+    //Tasks.update(taskId, { $set: { checked: setChecked } });
+   //  throw new Meteor.Error(404, "Please enter your name");
+    return id;
+   // return Meteor.users.update(this.userId, { $set: { 'profile.picture': data } });
+  }
+
 });

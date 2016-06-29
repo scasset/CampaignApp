@@ -1,29 +1,27 @@
-<ion-view title="{{ Campaign.CampaignName }}">
+<ion-view  ng-form="MyForm" >
   <ion-nav-buttons side="right">
-    <button ng-click="campaignCtrl.SaveCampaign(campaignCtrl.Campaign)" class="button   button-positive button-icon ion-ios-checkmark-empty">บันทึก</button>
-    <button style="padding-left:20px" ng-click="RemoveCampaign(campaignCtrl.Campaign)" class="button   button-positive button-icon  ion-ios-close-empty">ลบ</button>
+    <button ng-disabled="MyForm.$invalid" ng-click="campaignCtrl.SaveCampaign(campaignCtrl.Campaign)" class="button   button-positive button-icon ion-ios-checkmark-empty">บันทึก</button>
+    <button ng-disabled="!campaignCtrl.Campaign._id" style="padding-left:20px" ng-click="RemoveCampaign(campaignCtrl.Campaign)" class="button   button-positive button-icon  ion-ios-close-empty">ลบ</button>
  
   </ion-nav-buttons>
-  <!--<ion-nav-buttons side="left">
-    <a href="#/tab/campaigns" class="button button-clear button-positive button-icon ion-ios-arrow-back">รายการแคมเปญ</a> 
-      </ion-nav-buttons>-->
+ 
 
   <ion-content delegate-handle="chatScroll">
-    <div class="list" ng-show1="campaignCtrl.Campaign && campaignCtrl.Campaign.Status">
+    <div class="list" ng-show="campaignCtrl.Campaign && campaignCtrl.Campaign.Status">
       <div class="row responsive-sm">
         <div class="col">
 
           <label class=" item-input  item-stacked-label">
-    <span class="input-label">ชื่อแคมเปญ  </span>
-    <input type="text" placeholder="ชื่อแคมเปญ" ng-model="campaignCtrl.Campaign.CampaignName">
+    <span class="input-label">ชื่อแคมเปญ<font class="require">*</font></span>
+    <input type="text" placeholder="ชื่อแคมเปญ" ng-model="campaignCtrl.Campaign.CampaignName" required ng-minlength="2">
   </label>
 
         </div>
         <div class="col">
 
           <label class=" item-input item-stacked-label">
-    <span class="input-label">รหัสแคมเปญ</span>
-    <input type="text" placeholder="รหัสแคมเปญ" ng-model="campaignCtrl.Campaign.CampaignCode">
+    <span class="input-label">รหัสแคมเปญ<font class="require">*</font></span>
+    <input type="text" placeholder="รหัสแคมเปญ" ng-model="campaignCtrl.Campaign.CampaignCode" required ng-minlength="2">
   </label>
 
         </div>
@@ -32,15 +30,15 @@
         <div class="col">
           <label class=" item-input  item-stacked-label">
     <span class="input-label">วันที่เริ่ม</span>
-    {{xx}}
-  <label type="text"    class="input "  ng-click="campaignCtrl.OpenStartDatePicker(data)"  >{{ campaignCtrl.Campaign.StartDate | date:'dd/MM/yyyy' }}</label> 
+ 
+  <label type="text"    class="input "  ng-click="campaignCtrl.OpenStartDatePicker(data)"  required >{{ campaignCtrl.Campaign.StartDate | date:'dd/MM/yyyy' }}</label> 
   </label>
 
         </div>
         <div class="col">
           <label class=" item-input item-stacked-label">
     <span class="input-label">วันที่สิ้นสุด</span>
-    <label type="text"    class="input "  ng-click="OpenEndDatePicker()"  >{{ campaignCtrl.Campaign.EndDate | date:'dd/MM/yyyy' }}</label>
+    <label type="text"   required class="input "  ng-click="OpenEndDatePicker()"  >{{ campaignCtrl.Campaign.EndDate | date:'dd/MM/yyyy' }}</label>
   </label>
 
         </div>
@@ -95,7 +93,7 @@
             <div class="row  ">
               <div class="col"><span class=" ">Web Visit</span></div>
               <div class="col"><input type="number" ng-model="card.BudgetVisit" class="SCNumber10"></div>
-              <div class="col"><input type="number" ng-model="card.ActualVisit" class="SCNumber10" readonly1></div>
+              <div class="col"><input type="number" ng-model="card.ActualVisit" class="SCNumber10" readonly></div>
             </div>
             <div class="row  ">
               <div class="col">
@@ -108,7 +106,7 @@
               </div>
               <div class="col">
 
-                <input type="number" ng-model="card.ActualGoal" class="SCNumber10" readonly1>
+                <input type="number" ng-model="card.ActualGoal" class="SCNumber10" readonly>
 
               </div>
 
@@ -136,7 +134,7 @@
 
     </div>
      
-          <div ng-show=" campaignCtrl.Campaign.Medias.length % 2 == 0 " class=" row responsive-sm">
+          <div ng-show=" !campaignCtrl.Campaign.Medias || campaignCtrl.Campaign.Medias.length % 2 == 0 " class=" row responsive-sm">
       <div class=" col-50">
 
         <div class="card">
