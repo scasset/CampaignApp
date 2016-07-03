@@ -65,8 +65,20 @@ Meteor.startup(function () {
       for (i in campaignStat.Medias) {
         media = campaignStat.Medias[i];
         if (mediaCode == media.MediaCode) {
-          return media.Stats;
+          media.Chart = {};
+           media.Chart.Labels=[];
+           var visits = [];
+           var goals = [];
+          for(d in media.Stats) {
+                stat = media.Stats[d];
+                 media.Chart.Labels[d] = stat.StatDate.getDate() + '/' + stat.StatDate.getMonth();
+                 visits[d] = stat.Visit;
+                 goals[d] = stat.Goal;
 
+          }
+           media.Chart.Datas=[visits,goals];
+          return  media;
+          //return  _.sortBy(media, function(stat){ return stat.StatDate; });;
         }
         console.log("Media:" + media.MediaCode)
       }
@@ -106,18 +118,31 @@ Meteor.startup(function () {
       console.log("CampaignStat Notfound:" + CampaignCode);
 
     }
+ 
     var sumActual={};
     var i;
+ 
     for (i in tmpCampaign.Medias) {
-  //     console.log("i:" + i);
+     console.log("i:" + i);
   //     console.log("tmpCampaign.Medias[i]:"  );
   //    console.dir(tmpCampaign.Medias[i])
+var tmp = findStatByMediaCode(tmpCampaignStat, tmpCampaign.Medias[i].MediaCode);
+      if(tmp){ 
+         console.log("findStatByMediaCode:" );
+         
+        tmpCampaign.Medias[i].Stats = _.sortBy(tmp.Stats, function(stat){ return stat.StatDate; });
+        tmpCampaign.Medias[i].Chart = tmp.Chart;
+        console.dir(tmp);
+        console.dir(tmpCampaign.Medias[i]);
+      } else {
+         console.log("findStatByMediaCode: null" ); 
 
-      tmpCampaign.Medias[i].Stats = findStatByMediaCode(tmpCampaignStat, tmpCampaign.Medias[i].MediaCode);
+      }
+      
    //    console.log("2tmpCampaign.Medias[i]:"  );
    //   console.dir(tmpCampaign.Medias[i])
-      sumActual = getActual(tmpCampaign.Medias[i].Stats);
-      tmpCampaign.Medias[i].Stats = findStatByMediaCode(tmpCampaignStat, tmpCampaign.Medias[i].MediaCode);
+       sumActual = getActual(tmpCampaign.Medias[i].Stats);
+      //tmpCampaign.Medias[i] = findStatByMediaCode(tmpCampaignStat, tmpCampaign.Medias[i].MediaCode);
    //    console.log("3tmpCampaign.Medias[i]:"  );
     //  console.dir(tmpCampaign.Medias[i])
    //   console.log("sumActual");
@@ -130,8 +155,10 @@ Meteor.startup(function () {
  
       console.log("Media:" + media.MediaCode)
     }
+     
     var CampaignID = tmpCampaign._id
     delete tmpCampaign._id;
+     console.log("tmpCampaign:" );
     console.dir(tmpCampaign)
     Campaigns.update(CampaignID, { $set: tmpCampaign });
 

@@ -11,7 +11,7 @@ Meteor.publish('parties', function () {
 
 
 });
-
+// ok;
 Meteor.publish('Medias', function () {
   return Medias.find({ Status: "A" });
 
@@ -90,3 +90,56 @@ Meteor.publishComposite('chats', function () {
   }
 });
 
+
+Campaigns.find({ Status: "A" }, {
+    fields: {
+      "medias.ActualVisit": 0 //Exclude family.relation from the sent data
+    }
+  });
+
+
+Meteor.publishComposite('ReportByMedia', function () {
+
+  return {
+    find: function () {
+        return Medias.find({ Status: "A" });
+    },
+    children: [
+      {
+        find: function () {
+          return Campaigns.find({ Status: "A" ,"Medias.MediaCode":"think"}, {
+    fields: {
+      "medias.ActualVisit": 0 //Exclude family.relation from the sent data
+    }
+  });
+        }
+      } 
+    ]
+     
+  }
+});
+
+/**
+ db.getCollection('Campaigns').aggregate(
+   [
+   { $match: {
+    $and: [
+        { "Status": "A" },
+        { "Medias.MediaCode": "facebook" }
+    ]
+} },
+   { $unwind : "$Medias"},
+     {
+       $group:
+         {
+            _id : null,
+          // totalAmount: { $sum: { $multiply: [ "$price", "$quantity" ] } },
+           SumBudgetVisit: { $sum: "$Medias.BudgetVisit" },
+           SumActualVisit: { $sum: "$Medias.ActualVisit" },
+           SumBudgetExpense: { $sum: "$Medias.BudgetExpense" },
+         }
+     }
+   ]
+)
+  
+ * **/

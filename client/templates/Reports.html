@@ -1,58 +1,37 @@
-
 <ion-view title="รายงาน">
- 
- 
-  <ion-content delegate-handle="chatScroll"  >
- 
-    <div class="list">
-       
-      <div class="row responsive-sm">
-        <div class="col">
 
-          <label class=" item-input  item-stacked-label">
-    <span class="input-label">วันที่เริ่ม</span>
-    <input type="date" placeholder="DD/MM/YYY" ng-model="x.Campaign.StartDate">
-  </label>
 
-        </div>
-        <div class="col">
+  <ion-content delegate-handle="chatScroll">
 
-          <label class=" item-input item-stacked-label">
-    <span class="input-label">วันที่สิ้นสุด</span>
-    <input type="date" placeholder="DD/MM/YYY" ng-model="EndDate">
-  </label>
 
+
+    <div class=" row responsive-sm">
+      <div class=" col-50">
+        <div class="card">
+          <div class="item item-divider">
+            ต้นทุน (บาทต่อ Visit / Goal)
+          </div>
+          <div class="item item-text-wrap">
+
+
+            <canvas id="line" class="chart chart-bar" chart-data="datas" chart-labels="labels" chart-legend="true" chart-options="optionsBar"
+              chart-series="series"></canvas>
+
+          </div>
         </div>
       </div>
- 
-    </div>
-        <!--rep.ck1={{rep.ck1}}<Br>
-	  rep.data={{rep.data}}<Br>
-	  labels = {{rep.labels}}<Br>
-	  series = {{rep.series}} <Br>
-    data2 = {{rep.data2}}<Br>
-       sales = {{rep.sales}}<Br>
-       options={{rep.options}}-->
-   <div class="card">
-        <div class="item item-divider">
-           Cost per visit  
+      <div class=" col-50">
+        <div class="card">
+          <div class="item item-divider">
+            ยอดผู้เข้าเว็บแยกตามสื่อ
+          </div>
+          <div class="item item-text-wrap">
+            <canvas id="pie" class="chart chart-pie" chart-data="VisitByMedia" chart-labels="labels" chart-options="option2"
+              chart-legend="true">
+            </canvas>
+          </div>
         </div>
-        <div class="item item-text-wrap">
-            <canvas id="line" class="chart chart-bar" chart-data="data" chart-labels="labels"  chart-legend="true" 
-              chart-options="options" chart-series1="series"
-            
-            ></canvas>
-        </div>
-    </div>
- <div class="card">
-        <div class="item item-divider">
-           Cost per goal  
-        </div>
-        <div class="item item-text-wrap">
-            <canvas id="line" class="chart chart-bar" chart-data="dataGoal" chart-labels="labels"  chart-legend="true"   chart-options="{showTooltips: false}"
-            
-            ></canvas>
-        </div>
+      </div>
     </div>
  
   </ion-content>

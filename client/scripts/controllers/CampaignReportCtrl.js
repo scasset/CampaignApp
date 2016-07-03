@@ -4,6 +4,13 @@ angular
 
 function CampaignReportCtrl($scope, $reactive, $meteor, $stateParams, $state, $ionicHistory) {
 
+ // Meteor.subscribe('ReportByMedia');
+//   this.helpers({
+//   ReportByMedia() {
+// return Posts.find();
+
+//   }
+    
   //  $scope.subscribe('Campaigns');
   $scope.SumBudget = function (obj) {
 
@@ -33,20 +40,104 @@ function CampaignReportCtrl($scope, $reactive, $meteor, $stateParams, $state, $i
   this.CampaignID = $stateParams.CampaignID;
   // alert(this.CampaignID);
   //  $scope.subscribe('Campaigns');
-   $scope.labels = ["01/04", "02/04", "02/04", "03/04", "03/04", "03/04", "04/04", "05/04", "06/04", "01/04", "02/04", "02/04", "03/04", "03/04", "03/04", "04/04", "05/04", "06/04"];
+   this.labels = ["01/04", "02/04", "02/04", "03/04", "03/04"];
 		this.series = ['Visit', 'Goal'];
   this.dataVisit = [
-    [65, 59, 80, 81, 56, 65, 82, 19, 10, 31, 65, 59, 80, 81, 56, 65, 82, 19, 10, 31],
-    [15 / 10, 19 / 10, 10 / 10, 31 / 10, 6 / 10, 5 / 10, 40 / 10, 19 / 10, 10 / 10, 31 / 10, 15 / 10, 19 / 10, 10 / 10, 31 / 10, 6 / 10, 5 / 10, 40 / 10, 19 / 10, 10 / 10, 31 / 10]
+    [65, 59, 80, 81,22],
+    [1,2,3,4,3]
   ];
+  this.dataVisit1 =  [ 
+                    [ 
+                        10, 
+                        10, 
+                        8, 
+                        60, 
+                        12
+                    ], 
+                    [ 
+                        5, 
+                        5, 
+                        2, 
+                        8, 
+                        8
+                    ]
+                ];
 		this.dataGoal = [
     [65, 59, 80, 81, 56, 65, 82]
   ];
 
-  this.helpers({
+  //   $scope.$meteorSubscribe('Medias').then(function () {
+  //   $scope.rep = $scope.$meteorCollection(function () {
+  //     return Medias.find({});
+  //   }, false);
+  // });
 
+
+$scope.$meteorSubscribe('Medias');
+//     $scope.rep = $scope.$meteorCollection(ReportByMedia);
+
+// //   $scope.rep = 112;
+//  $scope.$meteorSubscribe('Medias').then(function() {
+// //    This swill get you the articles from the local collection
+//    this.articles =$scope.$meteorCollection(Medias);
+
+//   //  then you need to get the related Categories for the articles
+//     $scope.getCategories = function(article) {
+//         return $scope.$meteorObject(Categoris, article._id);
+//     }
+// });
+
+
+   Meteor.subscribe('ReportByMedia');
+//      $scope.rep = $scope.$meteorCollection(function () {
+//         return ReportByMedia.find({});
+//      }, false);
+
+
+  // this.helpers({
+    
+  //   articles() {
+  //     return Medias.find({});
+  //   }
+  // });
+  	$scope.optionsLine =  {
+        tooltipTemplate: "<%= value %>",
+        
+        showTooltips: true,
+        
+        onAnimationComplete: function()
+        {    
+          //  this.showTooltip(this.datasets[1].bars, true);   
+
+          
+        var ctx = this.chart.ctx;
+        ctx.font = this.scale.font;
+        ctx.fillStyle = this.scale.textColor
+        ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
+
+        this.datasets.forEach(function (dataset) {
+            dataset.points.forEach(function (bar) {
+                ctx.fillText(bar.value, bar.x, bar.y - 5);
+            });
+        })       
+        },
+        tooltipEvents: []
+    };
+  this.helpers({
+    
     Campaign() {
       return Campaigns.findOne(this.CampaignID);
+    },
+    Medias() {
+      return Medias.find({});
+    }
+  
+    
+     ,
+    c() {
+   
+      return ReportByMedia.find({})
     }
   });
 

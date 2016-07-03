@@ -1,13 +1,13 @@
 <ion-view title="{{ campaign.CampaignName }}">
-  <ion-nav-buttons side="left">
-    
+  <ion-nav-buttons side="left" class="bar-positive">
+
 
   </ion-nav-buttons>
- <!--<ion-nav-buttons side="left">
+  <!--<ion-nav-buttons side="left">
     <a href="#/tab/campaigns" class="button button-clear button-positive button-icon ion-ios-arrow-back">รายการแคมเปญ</a> 
       </ion-nav-buttons>-->
- 
-  <ion-content delegate-handle="chatScroll"  >
+
+  <ion-content delegate-handle="chatScroll">
 
     <div class="list" style="margin-bottom: 0px">
       <div class="row responsive-sm">
@@ -29,50 +29,39 @@
 
         </div>
       </div>
-     
-   
+
+
     </div>
 
 
     <div ng-repeat=" card in  campaignReportCtrl.Campaign.Medias track by $index " class=" row responsive-sm" ng-if=" $index % 2 == 0">
-      <div class=" col-50" ng-repeat=" card in [campaignReportCtrl.Campaign.Medias[$index], campaignReportCtrl.Campaign.Medias[$index+1]]"  ng-if=" card != null">
+      <div class=" col-50" ng-repeat=" card in [campaignReportCtrl.Campaign.Medias[$index], campaignReportCtrl.Campaign.Medias[$index+1]]"
+        ng-if=" card != null">
 
 
-        <div class="card" >
+        <div class="card">
           <div class="item item-divider">
- 
+
             <div class="row  ">
               <div class="col">
-                {{card.MediaCode?card.MediaCode:"ระบุช่องทาง"}} Expense : {{card.BudgetExpense|number :0}} บาท 
-                Visit {{card.ActualVisit|number :0}} / {{card.BudgetVisit|number :0}}
-                 Goal {{card.ActualGoal|number :0}} / {{card.BudgetGoal|number :0}}
+                {{card.MediaCode?card.MediaCode:"ระบุช่องทาง"}} Expense : {{card.BudgetExpense|number :0}} บาท Visit {{card.ActualVisit|number
+                :0}} / {{card.BudgetVisit|number :0}} Goal {{card.ActualGoal|number :0}} / {{card.BudgetGoal|number :0}}
               </div>
-              
+
             </div>
           </div>
           <div class="item item-text-wrap">
-           
-            
-            <div class="row  ">
-               
-              <div class="col">
-<!--{{campaignReportCtrl.dataVisit}}-->
-                <canvas id="line" class="chart chart-line"  chart-data="card.datas"
-                 chart-labels="card.labels"  chart-legend="true"
-                 chart-series = "campaignReportCtrl.series"   
-            
-            ></canvas>
-<!--
-          <canvas id="line" class="chart chart-line" 
-                chart-data="campaignReportCtrl.GetData(card.Stats)"
-                 chart-labels="campaignReportCtrl.GetLabel(card.Stats)"   chart-legend="true"
-                 chart-series = "campaignReportCtrl.series"   
-            
-            ></canvas>
 
--->
-              </div> 
-               
+
+            <div class="row  ">
+
+              <div class="col">
+
+                <canvas id="line" class="chart chart-line" chart-data="card.Chart.Datas" chart-labels="card.Chart.Labels" chart-legend="true"
+                  chart-options="optionsLine" chart-series="campaignReportCtrl.series"></canvas>
+
+              </div>
+
 
             </div>
           </div>

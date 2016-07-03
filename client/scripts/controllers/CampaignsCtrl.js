@@ -8,11 +8,19 @@ function CampaignsCtrl($scope, $reactive, $meteor, $state,$ionicSideMenuDelegate
   this.helpers({
 
     Campaigns() {
+
       return Campaigns.find({}, { sort: { 'CampaignName': -1 } });
     }
   });
- 
+ this.sort = 1;
+ $scope.sort = function () {
+   if(this.sort == 1) {
 
+   }else {
+     
+   }
+   
+  }
  
   $scope.NewCampaign = function () {
     // alert("new");

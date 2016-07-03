@@ -7,6 +7,8 @@ function HomeCtrl($scope, $state) {
       var cc=0;
   //.fetch()
   //$scope.Campaigns = $scope.$meteorCollection(Campaigns, false);
+ 
+
   $scope.Campaigns = $scope.$meteorCollection(function () {
     console.log("Refresh Campaigns home")
     return Campaigns.find({});

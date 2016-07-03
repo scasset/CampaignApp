@@ -40,7 +40,21 @@ db.sales.aggregate(
           }
       
   )
-  
+  // ok
+
+    db.Campaigns.group  (
+        {
+           //  key : { 'CampaignName': 1 },
+             cond:{},
+             reduce: function (curr,result) {
+                 result.total += curr.Test;
+                 },
+               initial :{total:0} 
+          }
+      
+  )
+
+
   
   //
   
