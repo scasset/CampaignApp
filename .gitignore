@@ -3,3 +3,5 @@ build/
 set.txt
 docker-compose.yml
 san
+run.bat
+build.bat
