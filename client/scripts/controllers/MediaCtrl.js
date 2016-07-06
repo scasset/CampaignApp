@@ -69,7 +69,7 @@ function MediaCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionSheet, 
 
 
   $scope.RemoveMedia = function (objMedia) {
-
+    if (window.confirm('ยืนยันลบข้อมูล')) {
     $scope.callMethod('RemoveMedia', objMedia, function (error, result) {
 
       if (error) {
@@ -82,7 +82,7 @@ function MediaCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionSheet, 
 
       }
     });
-
+    }
   }
 
 

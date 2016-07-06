@@ -13,7 +13,7 @@ function LoginCtrl($scope, $state, $ionicLoading, $ionicPopup, $log) {
           // login failed
           //  debugger; 
           handleError(err)
-          //alert(err);
+        //  alert(err);
         }
         else {
           // login successful

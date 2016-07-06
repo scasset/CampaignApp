@@ -6,6 +6,9 @@ function ReportsCtrl($scope, $meteor, $state) {
 
   $scope.labels = [];
   $scope.datas = [];
+  $scope.visitDatas = [[]];
+  $scope.goalDatas = [];
+ 
   $scope.series = ['Visit', 'Goal'];
   $scope.callMethod('MediaReport', 99, function (error, result) {
 
@@ -22,7 +25,13 @@ function ReportsCtrl($scope, $meteor, $state) {
       var totalVisit = 0;
       for (i in result) {
         data = result[i];
-        labels[i] = data._id.MediaCode;
+        media = Medias.findOne({MediaCode:data._id.MediaCode});
+     //   debugger;
+        if(media) {
+         labels[i] = media.MediaName;
+        } else {
+            labels[i] = data.MediaName;
+        }
         visits[i] = data.CostPerVisit.toFixed(2);
         goals[i] = data.CostPerGoal.toFixed(2);
         totalVisit += data.TotalActualVisit;
@@ -40,8 +49,11 @@ function ReportsCtrl($scope, $meteor, $state) {
       //  $scope.VisitByMedia = [54,46];
       $scope.VisitByMedia = tmpVisitByMedia;
       $scope.datas = [visits, goals];
+      //*$scope.visitDatas = [10,20];
+      $scope.visitDatas = [visits];
+      $scope.goalDatas = [goals];
       $scope.labels = labels;
-      //debugger;
+      // debugger;
       // alert(result);
     }
   });
@@ -59,32 +71,10 @@ function ReportsCtrl($scope, $meteor, $state) {
 		// 	[65, 59, 80, 81, 56, 65, 82]
   // ];
 
-
-  var data1 = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        fillColor: "rgba(220,220,220,0.5)",
-        strokeColor: "rgba(220,220,220,1)",
-        pointColor: "rgba(220,220,220,1)",
-        pointStrokeColor: "#fff",
-        data: [65, 59, 90, 81, 56, 55, 40]
-      },
-      {
-        fillColor: "rgba(151,187,205,0.5)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-        pointStrokeColor: "#fff",
-        data: [28, 48, 40, 19, 96, 27, 100]
-      }
-    ]
-  }
-
-  $scope.myChart = data1;
+ 
 
   $scope.options3 = {
     tooltipTemplate: "<%= value %>",
-
     showTooltips: true,
 
     onAnimationComplete: function () {
@@ -109,6 +99,7 @@ function ReportsCtrl($scope, $meteor, $state) {
 		$scope.optionsBar = {
     tooltipTemplate: "<%= value %>",
 
+
     showTooltips: true,
 
     onAnimationComplete: function () {
@@ -129,10 +120,20 @@ function ReportsCtrl($scope, $meteor, $state) {
     },
     tooltipEvents: []
   };
+  $scope.optionBar1 = {
+//scaleFontSize: 5,
+    tooltipTemplate: "<%= value %>",
 
+    showTooltips: true,
+
+    onAnimationComplete: function () {
+      this.showTooltip(this.datasets[0].bars, true);
+    },
+    tooltipEvents: []
+  };
   $scope.option2 = {
 
-
+    tooltipTemplate: "<%= value %>",
     showTooltips: true,
 
     onAnimationComplete: function () {

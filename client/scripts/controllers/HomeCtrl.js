@@ -17,8 +17,8 @@ function HomeCtrl($scope, $state) {
     console.log("SumBudget2");
   }
   $scope.SumBudget = function (campaign, sumResult) {
-    cc++;
-    console.log("cc2=" + cc);
+    //cc++;
+   // console.log("cc2=" + cc);
 
     //console.log("SumBudget" + campaign.CampaignCode); 
     //         var result = Campaigns.aggregate(

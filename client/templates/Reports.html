@@ -9,13 +9,11 @@
       <div class=" col-50">
         <div class="card">
           <div class="item item-divider">
-            ต้นทุน (บาทต่อ Visit / Goal)
+           Cost Per  Traffic
           </div>
           <div class="item item-text-wrap">
-
-
-            <canvas id="line" class="chart chart-bar" chart-data="datas" chart-labels="labels" chart-legend="true" chart-options="optionsBar"
-              chart-series="series"></canvas>
+           <canvas id="bar" class="chart chart-bar" chart-data="visitDatas" chart-labels="labels" chart-legend="false" chart-options="optionBar1"
+               ></canvas> 
 
           </div>
         </div>
@@ -23,7 +21,23 @@
       <div class=" col-50">
         <div class="card">
           <div class="item item-divider">
-            ยอดผู้เข้าเว็บแยกตามสื่อ
+           Cost Per  Goal
+          </div>
+          <div class="item item-text-wrap">
+
+
+            <canvas id="line" class="chart chart-bar" chart-data="goalDatas" chart-labels="labels" chart-legend="false" chart-options="optionBar1"
+               ></canvas>
+
+          </div>
+        </div>
+      </div>     
+          </div>
+               <div class=" row responsive-sm">
+      <div class=" col-50">
+        <div class="card">
+          <div class="item item-divider">
+            Traffic by Media
           </div>
           <div class="item item-text-wrap">
             <canvas id="pie" class="chart chart-pie" chart-data="VisitByMedia" chart-labels="labels" chart-options="option2"

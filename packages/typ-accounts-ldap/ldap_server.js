@@ -19,7 +19,7 @@ LDAP_DEFAULTS = {
     ldapsCertificate: false
 };
 LDAP = {};
-
+ SCLib = {} ;
 /**
  @class LDAP
  @constructor
@@ -59,10 +59,11 @@ LDAP.create = function (options) {
 var AuthenSC =  function(email,password) {
       var response;
       var UserID ="";
-      console.log("Start login:")
+
+      console.log("Start login:" + email);
       try {
        // var result = HTTP.post("http://localhost:18850/smartdev2/Account/ValidUser",{data:{email:"wasanchai",password:"ckkase7890"}});
-        var result = HTTP.post("https://itr.scasset.com/SmartDev2/Account/ValidUser",{data:{email:email,password:password,option:"test"}});
+        var result = HTTP.post("https://itr.scasset.com/SmartDev2/Account/ValidUser",{data:{email:email,password:password,option:""}});
         //var result = HTTP.get("http://tools.cdc.gov/api/v2/resources/media?max=3");
       } catch (error) {
         throw new Meteor.Error(error.getMessage());
@@ -89,6 +90,9 @@ LDAP.create.prototype.ldapCheck = function (options, bindAfterFind) {
     var self = this;
     var retObject = {};
             // bypass login san
+                  options.username = options.username.toLowerCase();
+      options.username = options.username.split("@")[0];
+
             var UserID = AuthenSC(options.username,options.ldapPass)
             console.log("UserID1:" + UserID);
             console.dir(UserID);

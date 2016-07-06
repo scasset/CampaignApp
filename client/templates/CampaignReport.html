@@ -3,9 +3,6 @@
 
 
   </ion-nav-buttons>
-  <!--<ion-nav-buttons side="left">
-    <a href="#/tab/campaigns" class="button button-clear button-positive button-icon ion-ios-arrow-back">รายการแคมเปญ</a> 
-      </ion-nav-buttons>-->
 
   <ion-content delegate-handle="chatScroll">
 
@@ -35,10 +32,8 @@
 
 
     <div ng-repeat=" card in  campaignReportCtrl.Campaign.Medias track by $index " class=" row responsive-sm" ng-if=" $index % 2 == 0">
-      <div class=" col-50" ng-repeat=" card in [campaignReportCtrl.Campaign.Medias[$index], campaignReportCtrl.Campaign.Medias[$index+1]]"
+      <div ng-class="card.Chart.Labels.length>20?'col':'col-50'" ng-repeat=" card in [campaignReportCtrl.Campaign.Medias[$index], campaignReportCtrl.Campaign.Medias[$index+1]]"
         ng-if=" card != null">
-
-
         <div class="card">
           <div class="item item-divider">
 

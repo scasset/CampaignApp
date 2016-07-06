@@ -60,8 +60,8 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
         var CampaignID = this.CampaignID;
 
         // var  CampaignID = '55mNtrpAYtcJ4GJQu';
-        // alert(CampaignID);
-        $state.go('tab.campaign.detail', { CampaignID }); // ok
+        //  alert(CampaignID);
+        $state.go('tab.campaigns.detail', { CampaignID }); // ok
         //   $state.go('tab.campaigns.m',{CampaignID});
       }
     });
@@ -74,6 +74,7 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
     // var tmpCam;
     // tmpCam =angular.copy(campaign );
     //  debugger;
+    if (window.confirm('ยืนยันลบข้อมูล')) { 
     $scope.callMethod('RemoveCampaign', objCam, function (error, result) {
       // debugger;
       if (error) {
@@ -94,7 +95,7 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
         // alert(result);
       }
     });
-
+  }
   }
   function showError(message) {
 
@@ -108,11 +109,12 @@ function CampaignCtrl($meteor, $scope, $reactive, $stateParams, $ionicActionShee
     });
   }
   this.ShowURL = function (campaign, media) {
-    //debugger;
+    debugger;
     var myPopup = $ionicPopup.show({
       template: '<textarea style="height:50px" onclick="this.select()" >'
       + campaign.URL
-      + '?utm_medium=banner'
+      + (campaign.URL.indexOf("?")>=0?"&":"?")
+      + 'utm_medium=banner'
       + '&utm_campaign=' + campaign.CampaignCode
       + '&utm_source=' + media.MediaCode + "</textarea>",
       title: 'URL Add Google Analytic',

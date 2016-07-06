@@ -1,6 +1,14 @@
 angular
   .module('CapmaignApp')
   .config(config)
+.config(function (ChartJsProvider) {
+    ChartJsProvider.setOptions({
+//    tooltipFillColor: '#EEE',
+//    tooltipFontColor: '#000',
+    tooltipFontSize: 9,
+    tooltipCornerRadius: 2
+    })
+  })
 .config(function (ionicDatePickerProvider) {
     var datePickerObj = {
       inputDate: new Date(),
@@ -59,6 +67,7 @@ $ionicConfigProvider.views.transition('none');
     })
  .state('tab.home', {
       url: '/home',
+         cache: false,
       views: {
         'tab-home': {
           templateUrl: 'client/templates/Home.html',
@@ -95,6 +104,7 @@ $ionicConfigProvider.views.transition('none');
       })  
  .state('tab.campaignReport', {
         url: '/home/:CampaignID',
+         cache: false,
         views: {
           'tab-home': {
             templateUrl: 'client/templates/CampaignReport.html',
@@ -113,6 +123,7 @@ $ionicConfigProvider.views.transition('none');
 //       })    
 	.state('tab.reports', {
       url: '/reports',
+         cache: false,
       views: {
         'tab-reports': {
           templateUrl: 'client/templates/Reports.html',

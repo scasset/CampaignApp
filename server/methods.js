@@ -1,3 +1,107 @@
+  function getActual(stats) {
+    var sumObj=   {};
+     sumObj.ActualVisit = 0;
+    sumObj.ActualGoal = 0;
+    if (stats) {
+      for (i in stats) {
+        stat = stats[i];
+        sumObj.ActualVisit += stat.Visit;
+        sumObj.ActualGoal += stat.Goal;
+
+      }
+
+    }
+    return sumObj;
+
+  }
+  function findStatByMediaCode(campaignStat, mediaCode) {
+    var i;
+    console.log("findStatByMediaCode");
+    if (campaignStat) {
+      for (i in campaignStat.Medias) {
+        media = campaignStat.Medias[i];
+        
+        if (mediaCode && mediaCode.toLowerCase() == media.MediaCode.toLowerCase()) {
+          media.Chart = {};
+           media.Chart.Labels=[];
+           var visits = [];
+           var goals = [];
+          for(d in media.Stats) {
+                stat = media.Stats[d];
+                var tmpDate = Date(stat.StatDate.getFullYear(),stat.StatDate.getMonth(),stat.StatDate.getDate()+1);
+
+                 media.Chart.Labels[d] = stat.StatDate.getDate() + '/' + (stat.StatDate.getMonth()+1);
+                 visits[d] = stat.Visit;
+                 goals[d] = stat.Goal;
+
+          }
+           media.Chart.Datas=[visits,goals];
+          return  media;
+          //return  _.sortBy(media, function(stat){ return stat.StatDate; });;
+        }
+        console.log("Media:" + media.MediaCode)
+      }
+    } else {
+      console.log("Notfound:" + CampaignCode)
+
+    }
+    return null;
+
+  }
+
+ function RefreshActual(CampaignCode) {
+   console.log("get:" + CampaignCode);
+    tmpCampaign = Campaigns.findOne({ CampaignCode: CampaignCode });
+    console.log("tmpCampaign:")
+    console.dir(tmpCampaign);
+    if (!tmpCampaign) {
+      console.log("Campaign Notfound:" + CampaignCode);
+
+    }
+ 
+    tmpCampaignStat = CampaignStats.findOne({ CampaignCode: CampaignCode });
+
+    console.log("tmpCampaignStat:")
+    console.dir(tmpCampaignStat);
+    if (!tmpCampaignStat) {
+      console.log("tmpCampaignStat Notfound:" + CampaignCode);
+      return;
+    }
+ 
+    var sumActual={};
+    var i;
+ 
+    for (i in tmpCampaign.Medias) {
+     console.log("i:" + i);
+ 
+var tmp = findStatByMediaCode(tmpCampaignStat, tmpCampaign.Medias[i].MediaCode);
+      if(tmp){ 
+         console.log("findStatByMediaCode:" );
+         
+        tmpCampaign.Medias[i].Stats = _.sortBy(tmp.Stats, function(stat){ return stat.StatDate; });
+        tmpCampaign.Medias[i].Chart = tmp.Chart;
+ 
+      } else {
+         console.log("findStatByMediaCode: null" ); 
+
+      }
+ 
+       sumActual = getActual(tmpCampaign.Medias[i].Stats);
+ 
+       tmpCampaign.Medias[i].ActualVisit = sumActual.ActualVisit;
+        tmpCampaign.Medias[i].ActualGoal = sumActual.ActualGoal;
+ 
+      console.log("Media:" + media.MediaCode)
+    }
+     
+    var CampaignID = tmpCampaign._id
+    delete tmpCampaign._id;
+     console.log("tmpCampaign:" ); 
+    Campaigns.update(CampaignID, { $set: tmpCampaign });
+    
+  }
+
+
 Meteor.methods({
   checkTwitter: function () {
     let userId = "wasanchai";
@@ -88,7 +192,7 @@ Meteor.methods({
 
         {
           $group: {
-            _id: { MediaCode: '$Medias.MediaCode' },
+            _id: { MediaCode: '$Medias.MediaCode', MediaName: '$Medias.MediaName'  },
             TotalVisit: { $sum: '$Test' },
             TotalActualVisit: { $sum: "$Medias.ActualVisit" },
             TotalActualGoal: { $sum: "$Medias.ActualGoal" },
@@ -99,9 +203,8 @@ Meteor.methods({
         {
           $project: {
             TotalActualVisit: 1, TotalActualGoal: 1, TotalBudgetExpense: 1
-            , CostPerVisit: { $divide: ["$TotalBudgetExpense", "$TotalActualVisit"] }
-            , CostPerGoal: { $divide: ["$TotalBudgetExpense", "$TotalActualGoal"] }
-          }
+            , CostPerVisit: { $cond: [ { $eq: [ "$TotalActualVisit", 0 ] }, 0, {"$divide":["$TotalBudgetExpense", "$TotalActualVisit"]} ] } 
+            , CostPerGoal: { $cond: [ { $eq: [ "$TotalActualGoal", 0 ] }, 0, {"$divide":["$TotalBudgetExpense", "$TotalActualGoal"]} ] }           }
         }
 
         ,
@@ -240,6 +343,7 @@ Meteor.methods({
     //Tasks.update(taskId, { $set: { checked: setChecked } });
     //  throw new Meteor.Error(404, "Please enter your name");
     //  debugger;
+    RefreshActual(data.CampaignCode);
     return id;
     // return Meteor.users.update(this.userId, { $set: { 'profile.picture': data } });
   }

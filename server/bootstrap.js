@@ -61,17 +61,18 @@ Meteor.startup(function () {
   }
   function findStatByMediaCode(campaignStat, mediaCode) {
     var i;
+    console.log("findStatByMediaCode");
     if (campaignStat) {
       for (i in campaignStat.Medias) {
         media = campaignStat.Medias[i];
-        if (mediaCode == media.MediaCode) {
+        if (mediaCode.toLowerCase() == media.MediaCode.toLowerCase()) {
           media.Chart = {};
            media.Chart.Labels=[];
            var visits = [];
            var goals = [];
           for(d in media.Stats) {
                 stat = media.Stats[d];
-                 media.Chart.Labels[d] = stat.StatDate.getDate() + '/' + stat.StatDate.getMonth();
+                 media.Chart.Labels[d] = stat.StatDate.getDate() + '/' + stat.StatDate.getMonth()+1;
                  visits[d] = stat.Visit;
                  goals[d] = stat.Goal;
 
@@ -89,14 +90,8 @@ Meteor.startup(function () {
     return null;
 
   }
-  Picker.route('/refresh/:CampaignCode', function (params, req, res, next) {
-    // this.unblock();
-    // "CampaignCode" : "ittest"
-    // Messages.find({ chatId: chat._id });
-    var CampaignCode = params.CampaignCode;
-
-
-    res.write("get:" + CampaignCode);
+  function RefreshActual(CampaignCode) {
+   //res.write("get:" + CampaignCode);
     tmpCampaign = Campaigns.findOne({ CampaignCode: CampaignCode });
     console.log("tmpCampaign:")
     console.dir(tmpCampaign);
@@ -114,7 +109,7 @@ Meteor.startup(function () {
 
     console.log("tmpCampaignStat:")
     console.dir(tmpCampaignStat);
-    if (!tmpCampaign) {
+    if (!tmpCampaignStat) {
       console.log("CampaignStat Notfound:" + CampaignCode);
 
     }
@@ -132,8 +127,8 @@ var tmp = findStatByMediaCode(tmpCampaignStat, tmpCampaign.Medias[i].MediaCode);
          
         tmpCampaign.Medias[i].Stats = _.sortBy(tmp.Stats, function(stat){ return stat.StatDate; });
         tmpCampaign.Medias[i].Chart = tmp.Chart;
-        console.dir(tmp);
-        console.dir(tmpCampaign.Medias[i]);
+      //  console.dir(tmp);
+     //   console.dir(tmpCampaign.Medias[i]);
       } else {
          console.log("findStatByMediaCode: null" ); 
 
@@ -159,8 +154,20 @@ var tmp = findStatByMediaCode(tmpCampaignStat, tmpCampaign.Medias[i].MediaCode);
     var CampaignID = tmpCampaign._id
     delete tmpCampaign._id;
      console.log("tmpCampaign:" );
-    console.dir(tmpCampaign)
+   // console.dir(tmpCampaign)
     Campaigns.update(CampaignID, { $set: tmpCampaign });
+    
+  }
+  Picker.route('/refresh/:CampaignCode', function (params, req, res, next) {
+    var CampaignCode = params.CampaignCode;
+    RefreshActual(CampaignCode);
+    // this.unblock();
+    // "CampaignCode" : "ittest"
+    // Messages.find({ chatId: chat._id });
+
+
+
+ res.write("get:" + CampaignCode);
 
     res.end();
     //res.write(new Buffer(result.content)); 
